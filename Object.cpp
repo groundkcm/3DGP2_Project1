@@ -884,7 +884,7 @@ void CSkyBox::Render(ID3D12GraphicsCommandList *pd3dCommandList, CCamera *pCamer
 
 ///////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 // 
-CGrassObject::CGrassObject()
+CGrassObject::CGrassObject() : CGameObject(1, 1)
 {
 }
 
