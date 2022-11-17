@@ -657,7 +657,7 @@ void CBillboardObjectsShader::BuildObjects(ID3D12Device* pd3dDevice, ID3D12Graph
 	UINT ncbElementBytes = ((sizeof(CB_GAMEOBJECT_INFO) + 255) & ~255);
 
 	CreateCbvSrvDescriptorHeaps(pd3dDevice, m_nObjects, 7);
-	CreateShaderVariables(pd3dDevice, pd3dCommandList);
+	//CreateShaderVariables(pd3dDevice, pd3dCommandList);
 	CreateConstantBufferViews(pd3dDevice, m_nObjects, m_pd3dcbGameObjects, ncbElementBytes);
 	CreateShaderResourceViews(pd3dDevice, ppGrassTextures[0], 0, 3);
 	CreateShaderResourceViews(pd3dDevice, ppGrassTextures[1], 0, 3);
@@ -746,6 +746,7 @@ void CBillboardObjectsShader::BuildObjects(ID3D12Device* pd3dDevice, ID3D12Graph
 			}
 		}
 	}
+	CreateShaderVariables(pd3dDevice, pd3dCommandList);
 }
 
 void CBillboardObjectsShader::ReleaseUploadBuffers()
