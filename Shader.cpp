@@ -653,7 +653,7 @@ void CBillboardObjectsShader::BuildObjects(ID3D12Device* pd3dDevice, ID3D12Graph
 		}
 	}
 	m_nObjects = nGrassObjects + nFlowerObjects + nTreeObjects[0] + nTreeObjects[1] + nTreeObjects[2];
-/*
+
 	UINT ncbElementBytes = ((sizeof(CB_GAMEOBJECT_INFO) + 255) & ~255);
 
 	CreateCbvSrvDescriptorHeaps(pd3dDevice, m_nObjects, 7);
@@ -676,7 +676,7 @@ void CBillboardObjectsShader::BuildObjects(ID3D12Device* pd3dDevice, ID3D12Graph
 
 	m_ppObjects = new CGameObject * [m_nObjects];
 
-	CGrassObject* pBillboardObject = NULL;
+/*	CGrassObject* pBillboardObject = NULL;
 	for (int nObjects = 0, z = 2; z <= 254; z++)
 	{
 		for (int x = 2; x <= 254; x++)
