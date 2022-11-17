@@ -187,6 +187,8 @@ public:
 	int								m_nMaterials = 0;
 	CMaterial						**m_ppMaterials = NULL;
 
+	D3D12_GPU_DESCRIPTOR_HANDLE		m_d3dCbvGPUDescriptorHandle;
+
 	XMFLOAT4X4						m_xmf4x4Transform;
 	XMFLOAT4X4						m_xmf4x4World;
 
@@ -237,6 +239,10 @@ public:
 	CGameObject *GetParent() { return(m_pParent); }
 	void UpdateTransform(XMFLOAT4X4 *pxmf4x4Parent=NULL);
 	CGameObject *FindFrame(char *pstrFrameName);
+
+	void SetCbvGPUDescriptorHandle(D3D12_GPU_DESCRIPTOR_HANDLE d3dCbvGPUDescriptorHandle) { m_d3dCbvGPUDescriptorHandle = d3dCbvGPUDescriptorHandle; }
+	void SetCbvGPUDescriptorHandlePtr(UINT64 nCbvGPUDescriptorHandlePtr) { m_d3dCbvGPUDescriptorHandle.ptr = nCbvGPUDescriptorHandlePtr; }
+	D3D12_GPU_DESCRIPTOR_HANDLE GetCbvGPUDescriptorHandle() { return(m_d3dCbvGPUDescriptorHandle); }
 
 	int FindReplicatedTexture(_TCHAR* pstrTextureName, D3D12_GPU_DESCRIPTOR_HANDLE* pd3dSrvGpuDescriptorHandle);
 
@@ -309,6 +315,20 @@ public:
 	virtual ~CSkyBox();
 
 	virtual void Render(ID3D12GraphicsCommandList *pd3dCommandList, CCamera *pCamera = NULL);
+};
+
+//////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+//
+class CGrassObject : public CGameObject
+{
+public:
+	CGrassObject();
+	virtual ~CGrassObject();
+
+	virtual void Animate(float fTimeElapsed);
+
+	float m_fRotationAngle = 0.0f;
+	float m_fRotationDelta = 1.0f;
 };
 
 //////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////

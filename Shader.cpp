@@ -676,7 +676,7 @@ void CBillboardObjectsShader::BuildObjects(ID3D12Device* pd3dDevice, ID3D12Graph
 
 	m_ppObjects = new CGameObject * [m_nObjects];
 
-/*	CGrassObject* pBillboardObject = NULL;
+	CGrassObject* pBillboardObject = NULL;
 	for (int nObjects = 0, z = 2; z <= 254; z++)
 	{
 		for (int x = 2; x <= 254; x++)
@@ -734,7 +734,7 @@ void CBillboardObjectsShader::BuildObjects(ID3D12Device* pd3dDevice, ID3D12Graph
 				pBillboardObject = new CGrassObject();
 
 				pBillboardObject->SetMesh(0, pMesh);
-				pBillboardObject->SetMaterial(pMaterial);
+				pBillboardObject->SetMaterial(0, pMaterial); //nMaterial ÀÏ¼öµµ?
 
 				float xPosition = x * xmf3Scale.x;
 				float zPosition = z * xmf3Scale.z;
@@ -745,7 +745,7 @@ void CBillboardObjectsShader::BuildObjects(ID3D12Device* pd3dDevice, ID3D12Graph
 				m_ppObjects[nObjects++] = pBillboardObject;
 			}
 		}
-	}*/
+	}
 }
 
 void CBillboardObjectsShader::ReleaseUploadBuffers()
