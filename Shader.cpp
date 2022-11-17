@@ -743,7 +743,7 @@ void CBillboardObjectsShader::BuildObjects(ID3D12Device* pd3dDevice, ID3D12Graph
 				pBillboardObject = new CGrassObject();
 
 				pBillboardObject->SetMesh(0, pMesh);
-				pBillboardObject->SetMaterial(0, pMaterial); //nMaterial ÀÏ¼öµµ?
+				pBillboardObject->SetMaterial(0, pMaterial);
 
 				float xPosition = x * xmf3Scale.x;
 				float zPosition = z * xmf3Scale.z;
