@@ -1067,7 +1067,7 @@ CHeightMapTerrain::~CHeightMapTerrain(void)
 
 ///////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 // 
-CTerrainWater::CTerrainWater(ID3D12Device* pd3dDevice, ID3D12GraphicsCommandList* pd3dCommandList, ID3D12RootSignature* pd3dGraphicsRootSignature, float fWidth, float fLength) : CGameObject(1, 1)
+CTerrainWater::CTerrainWater(ID3D12Device* pd3dDevice, ID3D12GraphicsCommandList* pd3dCommandList, ID3D12RootSignature* pd3dGraphicsRootSignature, float fWidth, float fLength) : CGameObject(0, 1)
 {
 	CTexturedRectMesh* pWaterMesh = new CTexturedRectMesh(pd3dDevice, pd3dCommandList, fWidth, 0.0f, fLength, 0.0f, 0.0f, 0.0f);
 	SetMesh(0, pWaterMesh);
@@ -1081,23 +1081,24 @@ CTerrainWater::CTerrainWater(ID3D12Device* pd3dDevice, ID3D12GraphicsCommandList
 	//pWaterTexture->LoadTextureFromDDSFile(pd3dDevice, pd3dCommandList, L"Image/Lava(Diffuse).dds", RESOURCE_TEXTURE2D, 2);
 	pWaterTexture->LoadTextureFromDDSFile(pd3dDevice, pd3dCommandList, L"Image/Water_Texture_Alpha.dds", RESOURCE_TEXTURE2D, 2);
 
-	UINT ncbElementBytes = ((sizeof(CB_GAMEOBJECT_INFO) + 255) & ~255); //256의 배수
+	//UINT ncbElementBytes = ((sizeof(CB_GAMEOBJECT_INFO) + 255) & ~255); //256의 배수
 
 	CTerrainWaterShader* pWaterShader = new CTerrainWaterShader();
 	pWaterShader->CreateShader(pd3dDevice, pd3dCommandList, pd3dGraphicsRootSignature);
 	pWaterShader->CreateShaderVariables(pd3dDevice, pd3dCommandList);
-	pWaterShader->CreateCbvSrvDescriptorHeaps(pd3dDevice, 1, 3);
-	pWaterShader->CreateConstantBufferViews(pd3dDevice, 1, m_pd3dcbGameObject, ncbElementBytes);
-	pWaterShader->CreateShaderResourceViews(pd3dDevice, pWaterTexture, 0, 5);
+	pWaterShader->CreateCbvSrvDescriptorHeaps(pd3dDevice, 0, 3);
+	//pWaterShader->CreateConstantBufferViews(pd3dDevice, 1, m_pd3dcbGameObject, ncbElementBytes);
+	pWaterShader->CreateShaderResourceViews(pd3dDevice, pWaterTexture, 0, 12);
 
 	CMaterial* pWaterMaterial = new CMaterial();
 	pWaterMaterial->SetTexture(pWaterTexture);
+	pWaterMaterial->SetShader(pWaterShader);
 
 	SetMaterial(0, pWaterMaterial);
 
-	SetCbvGPUDescriptorHandle(pWaterShader->GetGPUCbvDescriptorStartHandle());
+	//SetCbvGPUDescriptorHandle(pWaterShader->GetGPUCbvDescriptorStartHandle());
 
-	SetShader(0, pWaterShader);
+	//SetShader(0, pWaterShader);
 }
 
 CTerrainWater::~CTerrainWater()

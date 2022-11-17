@@ -70,22 +70,26 @@ void CScene::BuildObjects(ID3D12Device *pd3dDevice, ID3D12GraphicsCommandList *p
 
 	m_pSkyBox = new CSkyBox(pd3dDevice, pd3dCommandList, m_pd3dGraphicsRootSignature);
 
-	XMFLOAT3 xmf3Scale(18.0f, 6.0f, 18.0f);
+	XMFLOAT3 xmf3Scale(8.0f, 2.0f, 8.0f);
 	XMFLOAT4 xmf4Color(0.0f, 0.5f, 0.0f, 0.0f);
 	m_pTerrain = new CHeightMapTerrain(pd3dDevice, pd3dCommandList, m_pd3dGraphicsRootSignature, _T("Image/HeightMap.raw"), 257, 257, 257, 257, xmf3Scale, xmf4Color);
 
-	m_nShaders = 1;
-	m_ppShaders = new CShader*[m_nShaders];
+	m_pTerrainWater = new CTerrainWater(pd3dDevice, pd3dCommandList, m_pd3dGraphicsRootSignature, 257 * xmf3Scale.x, 257 * xmf3Scale.z);
+	m_pTerrainWater->SetPosition(+(257 * xmf3Scale.x * 0.5f), 155.0f, +(257 * xmf3Scale.z * 0.5f));
 
-	CObjectsShader *pObjectsShader = new CObjectsShader();
-	pObjectsShader->CreateShader(pd3dDevice, pd3dCommandList, m_pd3dGraphicsRootSignature);
-	pObjectsShader->BuildObjects(pd3dDevice, pd3dCommandList, m_pd3dGraphicsRootSignature, NULL);
-	m_ppShaders[0] = pObjectsShader;
 
-	/*CBillboardObjectsShader* pBillboardObjectShader = new CBillboardObjectsShader();
-	pBillboardObjectShader->CreateShader(pd3dDevice, pd3dCommandList, m_pd3dGraphicsRootSignature);
-	pBillboardObjectShader->BuildObjects(pd3dDevice, pd3dCommandList, m_pTerrain);
-	m_ppShaders[0] = pBillboardObjectShader;*/
+	//m_nShaders = 1;
+	//m_ppShaders = new CShader*[m_nShaders];
+
+	///*CObjectsShader *pObjectsShader = new CObjectsShader();
+	//pObjectsShader->CreateShader(pd3dDevice, pd3dCommandList, m_pd3dGraphicsRootSignature);
+	//pObjectsShader->BuildObjects(pd3dDevice, pd3dCommandList, m_pd3dGraphicsRootSignature, NULL);
+	//m_ppShaders[0] = pObjectsShader;*/
+
+	//CBillboardObjectsShader* pBillboardObjectShader = new CBillboardObjectsShader();
+	//pBillboardObjectShader->CreateShader(pd3dDevice, pd3dCommandList, m_pd3dGraphicsRootSignature);
+	//pBillboardObjectShader->BuildObjects(pd3dDevice, pd3dCommandList, m_pTerrain);
+	//m_ppShaders[0] = pBillboardObjectShader;
 
 	CreateShaderVariables(pd3dDevice, pd3dCommandList);
 }
@@ -108,6 +112,7 @@ void CScene::ReleaseObjects()
 	}
 
 	if (m_pTerrain) delete m_pTerrain;
+	if (m_pTerrainWater) delete m_pTerrainWater;
 	if (m_pSkyBox) delete m_pSkyBox;
 
 	if (m_ppGameObjects)
@@ -386,8 +391,9 @@ void CScene::Render(ID3D12GraphicsCommandList *pd3dCommandList, CCamera *pCamera
 
 	if (m_pSkyBox) m_pSkyBox->Render(pd3dCommandList, pCamera);
 	if (m_pTerrain) m_pTerrain->Render(pd3dCommandList, pCamera);
+	//if (m_pTerrainWater) m_pTerrainWater->Render(pd3dCommandList, pCamera);
 
-	for (int i = 0; i < m_nGameObjects; i++) if (m_ppGameObjects[i]) m_ppGameObjects[i]->Render(pd3dCommandList, pCamera);
+	//for (int i = 0; i < m_nGameObjects; i++) if (m_ppGameObjects[i]) m_ppGameObjects[i]->Render(pd3dCommandList, pCamera);
 	for (int i = 0; i < m_nShaders; i++) if (m_ppShaders[i]) m_ppShaders[i]->Render(pd3dCommandList, pCamera);
 }
 

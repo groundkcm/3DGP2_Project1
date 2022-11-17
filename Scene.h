@@ -84,4 +84,9 @@ public:
 
 	ID3D12Resource						*m_pd3dcbLights = NULL;
 	LIGHTS								*m_pcbMappedLights = NULL;
+
+protected:
+	CTerrainWater						*m_pTerrainWater = NULL;
+	XMFLOAT4X4							m_xmf4x4WaterAnimation;
+
 };
