@@ -178,6 +178,10 @@ public:
 	CGameObject(int nMeshes, int nMaterials);
 	virtual ~CGameObject();
 
+protected:
+	ID3D12Resource* m_pd3dcbGameObject = NULL;
+	CB_GAMEOBJECT_INFO* m_pcbMappedGameObject = NULL;
+
 public:
 	char							m_pstrFrameName[64];
 
