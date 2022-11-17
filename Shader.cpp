@@ -672,13 +672,13 @@ void CBillboardObjectsShader::BuildObjects(ID3D12Device* pd3dDevice, ID3D12Graph
 	CreateCbvSrvDescriptorHeaps(pd3dDevice, m_nObjects, 7);
 	CreateShaderVariables(pd3dDevice, pd3dCommandList);
 	CreateConstantBufferViews(pd3dDevice, m_nObjects, m_pd3dcbGameObjects, ncbElementBytes);
-	CreateShaderResourceViews(pd3dDevice, ppGrassTextures[0], 0, 3);
-	CreateShaderResourceViews(pd3dDevice, ppGrassTextures[1], 0, 3);
-	CreateShaderResourceViews(pd3dDevice, ppFlowerTextures[0], 0, 3);
-	CreateShaderResourceViews(pd3dDevice, ppFlowerTextures[1], 0, 3);
-	CreateShaderResourceViews(pd3dDevice, ppTreeTextures[0], 0, 3);
-	CreateShaderResourceViews(pd3dDevice, ppTreeTextures[1], 0, 3);
-	CreateShaderResourceViews(pd3dDevice, ppTreeTextures[2], 0, 3);
+	CreateShaderResourceViews(pd3dDevice, ppGrassTextures[0], 0, 12);
+	CreateShaderResourceViews(pd3dDevice, ppGrassTextures[1], 0, 12);
+	CreateShaderResourceViews(pd3dDevice, ppFlowerTextures[0], 0, 12);
+	CreateShaderResourceViews(pd3dDevice, ppFlowerTextures[1], 0, 12);
+	CreateShaderResourceViews(pd3dDevice, ppTreeTextures[0], 0, 12);
+	CreateShaderResourceViews(pd3dDevice, ppTreeTextures[1], 0, 12);
+	CreateShaderResourceViews(pd3dDevice, ppTreeTextures[2], 0, 12);
 
 	CHeightMapTerrain* pTerrain = (CHeightMapTerrain*)pContext;
 
@@ -923,5 +923,10 @@ void CTerrainWaterShader::CreateShader(ID3D12Device* pd3dDevice, ID3D12GraphicsC
 	m_ppd3dPipelineStates = new ID3D12PipelineState * [m_nPipelineStates];
 
 	CShader::CreateShader(pd3dDevice, pd3dCommandList, pd3dGraphicsRootSignature);
+
+	if (m_pd3dVertexShaderBlob) m_pd3dVertexShaderBlob->Release();
+	if (m_pd3dPixelShaderBlob) m_pd3dPixelShaderBlob->Release();
+
+	if (m_d3dPipelineStateDesc.InputLayout.pInputElementDescs) delete[] m_d3dPipelineStateDesc.InputLayout.pInputElementDescs;
 }
 
